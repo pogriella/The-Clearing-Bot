@@ -3,8 +3,6 @@ const { clearingChannelIds } = require('../config.json');
 module.exports = {
     commandName: "clear",
     async execute (message) {
-        message.guild.roles.cache.forEach(role => console.log(`${role.name} AND ${role.id}`));
-        console.log(message.member.roles.cache.some(role => role.id === '921442764825174047'));
         if (message.member.roles.cache.some(role => role.id === '921442764825174047') === false 
             && message.member.roles.cache.some(role => role.id === '921444172894961704') === false) {
                 return message.reply(`No, ${message.member}, you cunt.`);
