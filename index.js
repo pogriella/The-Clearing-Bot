@@ -33,10 +33,4 @@ client.on('interactionCreate', async interaction => {
     }
 });
 
-client.on('messageCreate', async message => {
-    if (!message.content.startsWith(prefix)) return;
-
-    const messageCommand = message.content.slice(prefix.length).split(/ +/).join(' ').split(' ')[0];
-});
-
 client.login(process.env.TOKEN);
