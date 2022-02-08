@@ -2,8 +2,9 @@ require('dotenv').config();
 const fs = require('fs');
 const { Client, Collection, Intents } = require('discord.js');
 const { prefix } = require('./config.json');
+const messageCommands = require('./messageCommandProcessor.js');
 
-const client = new Client({ intents: [ Intents.FLAGS.GUILDS ]});
+const client = new Client({ intents: [ Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES ]});
 
 client.commands = new Collection();
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
@@ -31,6 +32,12 @@ client.on('interactionCreate', async interaction => {
     } catch (error) {
         console.error(error);
     }
+});
+
+client.on('messageCreate', message => {
+    if (!message.content.startsWith(prefix)) return;
+
+    messageCommands.processCommand(message, prefix);
 });
 
 client.login(process.env.TOKEN);

@@ -10,12 +10,11 @@ module.exports = {
             .filter(channel => clearingChannelIds.includes(channel.id))
             .forEach(async channel => {
                 const textChannel = channel.guild.channels.cache.get(channel.id);
-                const messageFetch = await channel.messages.fetch({ limit: 100 });
                 let messageSize = 1;
                 let i = 0;
-                while (await messageSize > 0) {
+                while (messageSize > 0) {
                     await textChannel.bulkDelete(100, true);
-                    messageSize = messageFetch.size;
+                    messageSize = messageSize - 100;
                     console.log(messageSize);
                     i++;
                     if (i >= 30) return console.log('Error: timed out!');
