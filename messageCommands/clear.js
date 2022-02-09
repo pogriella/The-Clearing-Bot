@@ -17,9 +17,11 @@ module.exports = {
                 let messageSize = 1;
                 let i = 0;
                 while (await messageSize > 0) {
+                    const messageFetch = await channel.messages.fetch({ limit: 100 });
+                    console.log(`ORIGINAL SIZE: ${channel.name} HAS ${messageSize} MESSAGES`);
                     await textChannel.bulkDelete(100, true);
-                    messageSize = messageSize - 100;
-                    console.log(messageSize);
+                    messageSize = messageFetch.size
+                    console.log(`AFTER SIZE: ${channel.name} HAS ${messageSize} MESSAGES`);
                     i++;
                     if (i >= 30) return console.log('Error: timed out!');
                 }
